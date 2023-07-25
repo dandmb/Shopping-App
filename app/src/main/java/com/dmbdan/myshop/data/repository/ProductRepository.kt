@@ -14,8 +14,10 @@ class ProductRepository @Inject constructor(
     fun getProducts() = flow{
         emit(Result.LOADING())
         val remoteProducts=api.getProducts().body()
+        remoteProducts?.forEach {
+            dao.addProduct(it)
+        }
         emit(Result.SUCCESS(remoteProducts))
-        //dao.addProduct(remoteProducts)
     }.catch { error->
         emit(Result.ERROR(error.message!!))
     }
