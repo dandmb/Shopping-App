@@ -1,4 +1,4 @@
-package com.dmbdan.myshop.ui
+package com.dmbdan.myshop.ui.state
 
 import com.dmbdan.myshop.domain.model.ProductResponseItem
 
