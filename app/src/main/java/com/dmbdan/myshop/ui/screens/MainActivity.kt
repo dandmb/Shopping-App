@@ -65,7 +65,7 @@ fun DisplayProducts(
     uistate: Uistate,
     selectedItem: (ProductResponseItem) -> Unit
 ) {
-    var productItems = uistate.products.toList()
+    val productItems = uistate.products
 
     Scaffold(
         topBar = {
@@ -105,8 +105,18 @@ fun DisplayProducts(
                         .align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
-                    Text(text = uistate.error!!, textAlign = TextAlign.Center)
+                    LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+                        items(
+                            items = productItems,
+                            itemContent = {
+                                ProductListItem(productResponseItem = it, selectedItem = selectedItem)
+                            }
+
+
+                        )
+                    }.takeIf { productItems.isNotEmpty() }
+                    Icon(imageVector = Icons.Filled.Warning, contentDescription = null).takeIf { productItems.isEmpty() }
+                    Text(text = uistate.error, textAlign = TextAlign.Center).takeIf { productItems.isEmpty() }
 
                 }
             } else {
@@ -116,8 +126,6 @@ fun DisplayProducts(
                         itemContent = {
                             ProductListItem(productResponseItem = it, selectedItem = selectedItem)
                         }
-
-
                     )
                 }
             }

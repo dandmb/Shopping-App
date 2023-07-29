@@ -1,12 +1,9 @@
 package com.dmbdan.myshop.domain.model
 
 
-import com.google.gson.annotations.SerializedName
 
-class ProductResponse : ArrayList<ProductResponseItem>()
+class ProductResponse(val data:List<ProductResponseItem> = listOf()) : ArrayList<ProductResponseItem>()
 
-/*
-fun ProductResponse.toProductResponseItem():ProductResponseItem{
-    return ProductResponseItem()
+fun List<ProductResponseItem>.toProductResponse() : ProductResponse {
+    return ProductResponse(this)
 }
- */

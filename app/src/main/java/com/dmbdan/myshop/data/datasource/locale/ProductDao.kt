@@ -5,13 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dmbdan.myshop.domain.model.ProductResponseItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProduct(productResponseItem: ProductResponseItem)
 
     @Query("SELECT * FROM products")
-    suspend fun getProducts() : List<ProductResponseItem>
+    fun getProducts() : Flow<List<ProductResponseItem>>
 }

@@ -1,7 +1,6 @@
 package com.dmbdan.myshop.util
 
 
-
 sealed class Result<T>(
     val data: T? = null,
     val message: String? = null
@@ -13,7 +12,7 @@ sealed class Result<T>(
 
     // We'll pass error message wrapped in this 'Error'
     // class to the UI in case of failure response
-    class ERROR<T>(message: String,data: T? = null) : Result<T>(data, message)
+    class ERROR<T>(data: T? = null, message: String? = null) : Result<T>(data, message)
 
     // We'll just pass object of this Loading
     // class, just before making an api call

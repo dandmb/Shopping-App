@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: ProductRepository
-) : ViewModel(){
+) : ViewModel() {
 
     val uistate = mutableStateOf(Uistate())
 
@@ -21,20 +21,19 @@ class MainViewModel @Inject constructor(
         getProducts()
     }
 
-    fun getProducts(){
+    fun getProducts() {
         viewModelScope.launch {
-            repository.getProducts().collect{result->
-                when(result){
-                    is Result.LOADING ->{
+            repository.getProducts().collect { result ->
+                when (result) {
+                    is Result.LOADING -> {
                         uistate.value = Uistate(isLoading = true)
                     }
                     is Result.SUCCESS -> {
-                        uistate.value = Uistate(isLoading = false, products = result.data!!)
-                        println(uistate.value)
+                        uistate.value =
+                            Uistate(isLoading = false, products = result.data!!.toList())
                     }
-
                     else -> {
-                        uistate.value = Uistate(error = result.message)
+                        uistate.value = Uistate(error = result.message, products = result.data!!.data)
                     }
                 }
 
